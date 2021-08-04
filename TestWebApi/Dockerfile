@@ -3,7 +3,8 @@ WORKDIR /app
 
 COPY *.csproj .
 
-RUN dotnet restore
+# RUN dotnet restore
+RUN dotnet restore "TestWebApi/TestWebApi.csproj"
 
 COPY . ./
 
