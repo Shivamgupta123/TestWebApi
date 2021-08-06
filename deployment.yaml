@@ -15,10 +15,10 @@ template:
       app: dotnet-app
   spec:
     containers:
-    - name: dotnet-app
+    -name: dotnet-app
       image: shivamgupta04/samplewebapi:latest
       ports:
-      - name: http
+      -name: http
        containerPort: 80
        protocol: TCP
 
