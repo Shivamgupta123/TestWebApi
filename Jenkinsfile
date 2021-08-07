@@ -95,5 +95,6 @@ stage('Docker Deployent'){
        
     }
 }
+            }
  }
 }
