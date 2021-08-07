@@ -30,6 +30,14 @@ pipeline{
        bat "dotnet restore"
       }
    }
+stage('Start SonarQube Analysis') { 
+steps {
+echo "Start sonarQube Analysis Step"
+withSonarQubeEnv('Test_Sonar') {
+bat "${scannerHome}\\SonarScanner.MSBuild.exe begin /k:test /n:sonar_shivam /v:1.0"
+}
+}
+}
    stage('Code Build'){
    steps{
        echo "Clean previous build"
