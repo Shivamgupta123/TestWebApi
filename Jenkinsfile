@@ -49,6 +49,14 @@ bat "${scannerHome}\\SonarScanner.MSBuild.exe begin /k:test /n:sonar_shivam /v:1
 
      }
   }
+ stage("Stop sonarQube Analysis") {
+        steps {
+          echo "Stop sonarQube analysis"
+          withSonarQubeEnv('Test_Sonar') {
+            bat "${scannerHome}\\SonarScanner.MSBuild.exe end"
+          }
+        }
+      }
 stage('Docker Image'){
     steps{
         echo "Docker Image Step"
