@@ -3,6 +3,7 @@ pipeline{
     environment {
         sonarScannerHome = tool name : 'sonar_scanner_dotnet'
         registry = 'shivamgupta04/samplewebapi'
+        cname = 'c_shivamgupta04_feature'
     }
     stages  {
         stage('checkout'){
@@ -43,12 +44,32 @@ pipeline{
             steps{
                 echo"Pushing image to docker hub"
                 bat "docker tag i_${username}_feature:${BUILD_NUMBER} ${registry}:${BUILD_NUMBER}"
-                bat "docker tag i_${username}_feature:${BUILD_NUMBER} ${registry}: latest"
+                bat "docker tag i_${username}_feature : ${BUILD_NUMBER} ${registry}: latest"
                 withDockerRegistry(credentialsId : 'Dockerhub', url : ''){
                     bat "docker push ${registry}:${BUILD_NUMBER}"
                     bat "docker push ${registry}:latest"
                 }
             }
     }
+       stage('Deployment'){
+           steps{
+               script{
+                   def containerId = "${bat(returnStdout: true,script:'docker ps -aqf name=^c_shivamgupta04_feature$').trim().readLines().drop(1)}"
+                   if(containerId != '[]'){
+                       bat "docker stop ${cname} && docker rm ${cname}"
+                   }
+               }
+               parallel(
+                   'Docker Deployment':{
+                       echo "Docker deployment"
+                       bat "docker run --name ${cname} -d -p 7400:80 ${registry}:${BUILD_NUMBER}"
+                   },
+                   'Kubernetes Deployment':{
+                       echo"Deploying to k8s cluster"
+                       bat "kubectl apply -f deployment.yaml"
+                   }
+               )
+           }
+       }
     }
 }
