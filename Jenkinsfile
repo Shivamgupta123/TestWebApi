@@ -42,11 +42,11 @@ pipeline{
         stage('Push Image to dockerhub'){
             steps{
                 echo"Pushing image to docker hub"
-                bat "docker tag i_${username}_feature:${BUILD_NUMBER} ${registry} : ${BUILD_NUMBER}"
-                bat "docker tag i_${username}_feature : ${BUILD_NUMBER} ${registry : latest}"
+                bat "docker tag i_${username}_feature:${BUILD_NUMBER} ${registry}:${BUILD_NUMBER}"
+                bat "docker tag i_${username}_feature : ${BUILD_NUMBER} ${registry}: latest"
                 withDockerRegistry(credentialsId : 'Dockerhub', url : ''){
-                    bat "docker push ${registry} : ${BUILD_NUMBER}"
-                    bat "docker push ${registry} : latest"
+                    bat "docker push ${registry}:${BUILD_NUMBER}"
+                    bat "docker push ${registry}:latest"
                 }
             }
     }
