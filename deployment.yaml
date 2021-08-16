@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nagp-feature-deployment
+  namespace: kubernetes-cluster-shivam
+  labels:
+    app: nagp-feature
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nagp-feature
+  template:
+    metadata:
+      labels:
+        app: nagp-feature
+    spec:
+      containers:
+      - name: nagp-feature
+        image: shivamgupta04/samplewebapi:latest
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: nagp-deployment-service-feature
+  namespace: kubernetes-cluster-shivam
+  labels:
+    app: nagp-feature
+spec:
+  type: NodePort
+  selector: 
+    app: nagp-feature
+  ports: 
+  - protocol: "TCP"
+    nodePort: 30158
+    port: 80
+    targetPort: 80
+  selector: 
+    app: nagp-feature
+  type: "LoadBalancer"
