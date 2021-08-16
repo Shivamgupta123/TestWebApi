@@ -45,7 +45,7 @@ pipeline{
                 echo"Pushing image to docker hub"
                 bat "docker tag i_${username}_feature:${BUILD_NUMBER} ${registry}:${BUILD_NUMBER}"
                 bat "docker tag i_${username}_feature:${BUILD_NUMBER} ${registry}:latest"
-                withDockerRegistry(credentialsId : 'Dockerhub', url : ''){
+                withDockerRegistry(credentialsId : 'DockerHub', url : ''){
                     bat "docker push ${registry}:${BUILD_NUMBER}"
                     bat "docker push ${registry}:latest"
                 }
