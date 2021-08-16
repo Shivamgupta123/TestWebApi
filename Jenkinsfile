@@ -1,5 +1,5 @@
 pipeline{
-    agent : any
+    agent any
     environment {
         sonarScannerHome = tool name : 'sonar_scanner_dotnet'
     }
