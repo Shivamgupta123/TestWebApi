@@ -51,14 +51,18 @@ pipeline{
                 }
             }
     }
-       stage('Deployment'){
-           steps{
-               script{
+    stage('pre-container check'){
+        steps{
+            script{
                    def containerId = "${bat(returnStdout: true,script:'docker ps -aqf name=^c_shivamgupta04_feature$').trim().readLines().drop(1)}"
                    if(containerId != '[]'){
                        bat "docker stop ${cname} && docker rm ${cname}"
                    }
                }
+        }
+    }
+       stage('Deployment'){
+           steps{
                parallel(
                    'Docker Deployment':{
                        echo "Docker deployment"
