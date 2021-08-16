@@ -1,5 +1,8 @@
 pipeline{
     agent : any
+    environment : {
+        sonarScannerHome : tool name = 'sonar-scanner-dotnet'
+    }
     stages : {
         stage('checkout'){
             steps{
@@ -17,7 +20,7 @@ pipeline{
             steps{
                 echo"start sonar qube analysis"
                 withSonarQubeEnv('Test_Sonar'){
-                    bat"${sonarScannerHome}\\SonarScanner.MSBuild.exe begin\n:Nagp_Exam\k:Nagp_Exam\v:1.0"
+                    bat"${sonarScannerHome}\\SonarScanner.MSBuild.exe begin/n:Nagp_Exam/k:Nagp_Exam/v:1.0"
                 }
             }
         }
