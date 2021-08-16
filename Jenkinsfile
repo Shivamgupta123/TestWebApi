@@ -1,7 +1,7 @@
 pipeline{
     agent : any
     environment : {
-        sonarScannerHome : tool name = 'sonar-scanner-dotnet'
+        sonarScannerHome = tool name : 'sonar-scanner-dotnet'
     }
     stages : {
         stage('checkout'){
