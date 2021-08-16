@@ -37,7 +37,7 @@ spec:
     app: nagp-feature
   ports: 
   - protocol: "TCP"
-    nodePort: 30158
+    nodePort: 30159
     port: 80
     targetPort: 80
   selector: 
