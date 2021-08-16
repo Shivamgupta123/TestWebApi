@@ -3,7 +3,7 @@ pipeline{
     environment {
         sonarScannerHome = tool name : 'sonar_scanner_dotnet'
     }
-    stages : {
+    stages  {
         stage('checkout'){
             steps{
                 echo "Checkout code from git"
