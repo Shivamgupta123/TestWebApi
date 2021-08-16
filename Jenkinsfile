@@ -32,5 +32,22 @@ pipeline{
                 }
             }
         }
+        stage('Build Docker Image'){
+            steps{
+                bat "dotnet clean"
+                bat "docker build -t i_${username}_master : ${BUILD_NUMBER} --no-cache -f TestWebApi/Dockerfile ."
+            }
+        }
+        stage(Push Image to dockerhub){
+            steps{
+                echo"Pushing image to docker hub"
+                bat "docker tag i_${username}_master : ${BUILD_NUMBER} ${registry} : ${BUILD_NUMBER}"
+                bat "docker tag i_${username}_master : ${BUILD_NUMBER} ${registry : latest}"
+                withDockerRegistry(credentialsID : 'Dockerhub', url : ''){
+                    bat "docker push ${registry} : ${BUILD_NUMBER}"
+                    bat "docker push ${registry} : latest"
+                }
+            }
+    }
     }
 }
