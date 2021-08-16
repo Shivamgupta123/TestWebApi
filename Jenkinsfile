@@ -2,6 +2,7 @@ pipeline{
     agent any
     environment {
         sonarScannerHome = tool name : 'sonar_scanner_dotnet'
+        registry = 'shivamgupta04/samplewebapi'
     }
     stages  {
         stage('checkout'){
